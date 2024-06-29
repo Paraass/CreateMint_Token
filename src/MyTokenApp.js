@@ -1,13 +1,9 @@
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import erc20abi from "./ERC20abi.json";
-import ErrorMessage from "./ErrorMessage";
-import TxList from "./TxList";
 
 export default function App() {
-  const [txs, setTxs] = useState([]);
   const [contractListened, setContractListened] = useState();
-  const [error, setError] = useState();
   const [contractInfo, setContractInfo] = useState({
     address: "-",
     tokenName: "-",
