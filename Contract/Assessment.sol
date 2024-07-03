@@ -4,16 +4,16 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract Token is ERC20 {
-    address public owner;
+    address public contractOwner;
 
-    constructor() ERC20("PARAS","PRS") {
-        owner = msg.sender;
-        _mint(owner, 10000 * 10 ** decimals());
+    constructor() ERC20("Paras", "PRS") {
+        contractOwner = msg.sender;
+        _mint(msg.sender, 5000 * 10 ** uint(decimals()));
     }
 
-    function mint(address to, uint256 amount) external {
-        require(msg.sender == owner, "Only owner can mint");
-        _mint(to, amount);
+    function mint(address recipient, uint256 amount) external {
+        require(msg.sender == contractOwner, "Only the contract owner can mint");
+        _mint(recipient, amount);
     }
 
     function burn(uint256 amount) external {
@@ -21,6 +21,7 @@ contract Token is ERC20 {
     }
 
     function transfer(address recipient, uint256 amount) public override returns (bool) {
-        return super.transfer(recipient, amount);
+        require(recipient != address(0), "Cannot transfer to the zero address");
+        return super.transfer(recipient, amount); 
     }
 }
